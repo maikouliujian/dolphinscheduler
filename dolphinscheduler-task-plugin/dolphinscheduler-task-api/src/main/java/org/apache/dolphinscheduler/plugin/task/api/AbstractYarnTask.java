@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 /**
  * abstract yarn task
  */
+//todo task的抽象类
 public abstract class AbstractYarnTask extends AbstractRemoteTask {
 
     /**
@@ -107,6 +108,7 @@ public abstract class AbstractYarnTask extends AbstractRemoteTask {
      */
     @Override
     public List<String> getApplicationIds() throws TaskException {
+        //todo 获取appids
         return LogUtils.getAppIdsFromLogFile(taskRequest.getLogPath(), logger);
     }
 

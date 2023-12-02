@@ -59,6 +59,7 @@ public abstract class AbstractRemoteTask extends AbstractTask {
         }
 
         // submit a remote application
+        //todo 提交一个application！！！！！！
         submitApplication();
 
         if (StringUtils.isNotEmpty(getAppIds())) {

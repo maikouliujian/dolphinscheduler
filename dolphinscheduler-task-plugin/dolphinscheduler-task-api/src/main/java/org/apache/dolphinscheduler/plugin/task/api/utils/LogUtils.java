@@ -42,7 +42,7 @@ import org.slf4j.MDC;
 @Slf4j
 @UtilityClass
 public class LogUtils {
-
+    //todo appid正则匹配！！！！！！
     private static final Pattern APPLICATION_REGEX = Pattern.compile(TaskConstants.YARN_APPLICATION_REGEX);
 
     public List<String> getAppIdsFromLogFile(@NonNull String logPath) {

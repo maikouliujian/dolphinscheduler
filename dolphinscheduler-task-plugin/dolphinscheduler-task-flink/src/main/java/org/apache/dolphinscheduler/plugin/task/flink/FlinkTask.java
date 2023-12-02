@@ -71,6 +71,7 @@ public class FlinkTask extends AbstractYarnTask {
      *
      * @return command
      */
+    //todo 获取启动脚本！！！！！！
     @Override
     protected String buildCommand() {
         // flink run/run-application [OPTIONS] <jar-file> <arguments>

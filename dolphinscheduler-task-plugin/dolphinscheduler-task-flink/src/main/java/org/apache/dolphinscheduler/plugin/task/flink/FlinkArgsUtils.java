@@ -115,7 +115,7 @@ public class FlinkArgsUtils {
         }
         return args;
     }
-
+    //todo 构建flink运行脚本
     public static List<String> buildInitOptionsForSql(FlinkParameters flinkParameters) {
         List<String> initOptions = new ArrayList<>();
 
@@ -170,7 +170,7 @@ public class FlinkArgsUtils {
 
         return initOptions;
     }
-
+    //todo flink提交入口
     private static List<String> buildRunCommandLineForOthers(TaskExecutionContext taskExecutionContext, FlinkParameters flinkParameters) {
         List<String> args = new ArrayList<>();
 

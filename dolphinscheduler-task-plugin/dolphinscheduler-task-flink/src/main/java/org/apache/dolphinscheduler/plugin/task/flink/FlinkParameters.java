@@ -41,6 +41,7 @@ public class FlinkParameters extends AbstractParameters {
     /**
      * deploy mode  yarn-cluster yarn-local yarn-application
      */
+    //todo 部署模式
     private FlinkDeployMode deployMode;
 
     /**

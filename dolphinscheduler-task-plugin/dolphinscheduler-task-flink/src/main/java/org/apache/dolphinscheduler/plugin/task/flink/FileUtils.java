@@ -46,6 +46,7 @@ public class FileUtils {
         return String.format("%s/%s_init.sql", taskExecutionContext.getExecutePath(), taskExecutionContext.getTaskAppId());
     }
 
+    //todo 脚本文件
     public static String getScriptFilePath(TaskExecutionContext taskExecutionContext) {
         return String.format("%s/%s_node.sql", taskExecutionContext.getExecutePath(), taskExecutionContext.getTaskAppId());
     }

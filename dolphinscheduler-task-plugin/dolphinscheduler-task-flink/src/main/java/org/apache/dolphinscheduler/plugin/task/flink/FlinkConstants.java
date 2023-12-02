@@ -16,7 +16,7 @@
  */
 
 package org.apache.dolphinscheduler.plugin.task.flink;
-
+//todo flink执行脚本
 public class FlinkConstants {
 
     private FlinkConstants() {

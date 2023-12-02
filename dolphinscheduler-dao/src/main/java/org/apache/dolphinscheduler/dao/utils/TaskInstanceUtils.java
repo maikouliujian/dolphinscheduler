@@ -51,6 +51,7 @@ public class TaskInstanceUtils {
         target.setProcessDefine(source.getProcessDefine());
         target.setTaskDefine(source.getTaskDefine());
         target.setPid(source.getPid());
+        //todo yarn appid
         target.setAppLink(source.getAppLink());
         target.setFlag(source.getFlag());
         target.setDependency(source.getDependency());

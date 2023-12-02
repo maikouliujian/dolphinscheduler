@@ -411,6 +411,7 @@ public class StreamTaskExecuteRunnable implements Runnable {
         taskInstance.setLogPath(taskEvent.getLogPath());
         taskInstance.setExecutePath(taskEvent.getExecutePath());
         taskInstance.setPid(taskEvent.getProcessId());
+        //todo yarn appid
         taskInstance.setAppLink(taskEvent.getAppIds());
         taskInstance.setState(taskEvent.getState());
         taskInstance.setEndTime(taskEvent.getEndTime());

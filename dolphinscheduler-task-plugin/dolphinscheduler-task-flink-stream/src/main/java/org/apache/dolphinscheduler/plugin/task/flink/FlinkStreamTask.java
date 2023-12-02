@@ -59,7 +59,7 @@ public class FlinkStreamTask extends FlinkTask implements StreamTask {
         }
         flinkParameters.setQueue(taskExecutionContext.getQueue());
         setMainJarName();
-
+        //todo 将运行脚本写入文件中
         FileUtils.generateScriptFile(taskExecutionContext, flinkParameters);
     }
 

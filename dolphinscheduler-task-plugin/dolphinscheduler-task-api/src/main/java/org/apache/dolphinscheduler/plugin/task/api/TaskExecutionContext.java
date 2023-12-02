@@ -75,6 +75,7 @@ public class TaskExecutionContext implements Serializable {
     /**
      * task execute path
      */
+    //todo job执行path
     private String executePath;
 
     /**
