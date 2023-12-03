@@ -202,7 +202,7 @@ public class LogClient implements AutoCloseable {
             return false;
         }
     }
-
+    //todo 从对应的worker节点拿到appid
     public @Nullable List<String> getAppIds(@NonNull String host, int port,
                                             @NonNull String taskLogFilePath) throws RemotingException, InterruptedException {
         logger.info("Begin to get appIds from worker: {}:{} taskLogPath: {}", host, port, taskLogFilePath);

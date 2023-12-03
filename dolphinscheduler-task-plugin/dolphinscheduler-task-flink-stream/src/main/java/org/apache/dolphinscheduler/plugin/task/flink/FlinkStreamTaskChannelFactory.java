@@ -29,6 +29,7 @@ import com.google.auto.service.AutoService;
 public class FlinkStreamTaskChannelFactory implements TaskChannelFactory {
     @Override
     public TaskChannel create() {
+        //todo 通过工厂创建对象
         return new FlinkStreamTaskChannel();
     }
 

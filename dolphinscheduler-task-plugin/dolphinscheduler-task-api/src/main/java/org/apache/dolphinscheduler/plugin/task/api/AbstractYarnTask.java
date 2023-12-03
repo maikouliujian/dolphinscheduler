@@ -60,6 +60,7 @@ public abstract class AbstractYarnTask extends AbstractRemoteTask {
             TaskResponse response = shellCommandExecutor.run(buildCommand());
             setExitStatusCode(response.getExitStatusCode());
             // set appIds
+            //todo 启动任务时设置appid
             setAppIds(String.join(TaskConstants.COMMA, getApplicationIds()));
             setProcessId(response.getProcessId());
         } catch (InterruptedException ex) {

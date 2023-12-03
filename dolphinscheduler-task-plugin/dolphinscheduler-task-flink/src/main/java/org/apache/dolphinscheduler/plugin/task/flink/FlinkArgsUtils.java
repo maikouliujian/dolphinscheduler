@@ -73,6 +73,7 @@ public class FlinkArgsUtils {
         List<String> args = new ArrayList<>();
         args.add(FlinkConstants.FLINK_COMMAND);
         args.add(FlinkConstants.FLINK_CANCEL);
+        //todo 【bug】flink cancel + jobid，而不是appid
         args.add(taskExecutionContext.getAppIds());
         return args;
     }
@@ -94,6 +95,7 @@ public class FlinkArgsUtils {
      *
      * @return argument list
      */
+    //todo 构建flinksql运行脚本
     private static List<String> buildRunCommandLineForSql(TaskExecutionContext taskExecutionContext, FlinkParameters flinkParameters) {
         List<String> args = new ArrayList<>();
 
@@ -115,7 +117,7 @@ public class FlinkArgsUtils {
         }
         return args;
     }
-    //todo 构建flink运行脚本
+    //todo 构建flinksql初始化脚本
     public static List<String> buildInitOptionsForSql(FlinkParameters flinkParameters) {
         List<String> initOptions = new ArrayList<>();
 
@@ -170,7 +172,7 @@ public class FlinkArgsUtils {
 
         return initOptions;
     }
-    //todo flink提交入口
+    //todo 构建flink运行脚本
     private static List<String> buildRunCommandLineForOthers(TaskExecutionContext taskExecutionContext, FlinkParameters flinkParameters) {
         List<String> args = new ArrayList<>();
 
@@ -181,6 +183,7 @@ public class FlinkArgsUtils {
         switch (deployMode) {
             case CLUSTER:
                 if (FLINK_VERSION_AFTER_OR_EQUALS_1_12.equals(flinkVersion) || FLINK_VERSION_AFTER_OR_EQUALS_1_13.equals(flinkVersion)) {
+                    //todo
                     args.add(FlinkConstants.FLINK_RUN);  //run
                     args.add(FlinkConstants.FLINK_EXECUTION_TARGET);  //-t
                     args.add(FlinkConstants.FLINK_YARN_PER_JOB);  //yarn-per-job
@@ -191,6 +194,7 @@ public class FlinkArgsUtils {
                 }
                 break;
             case APPLICATION:
+                //todo
                 args.add(FlinkConstants.FLINK_RUN_APPLICATION);  //run-application
                 args.add(FlinkConstants.FLINK_EXECUTION_TARGET);  //-t
                 args.add(FlinkConstants.FLINK_YARN_APPLICATION);  //yarn-application

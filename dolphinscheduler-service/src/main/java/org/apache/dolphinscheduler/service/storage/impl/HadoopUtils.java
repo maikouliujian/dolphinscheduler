@@ -198,6 +198,7 @@ public class HadoopUtils implements Closeable, StorageOperate {
      * @param applicationId application id
      * @return url of application
      */
+    //todo 获取appid url
     public String getApplicationUrl(String applicationId) throws BaseException {
 
         yarnEnabled = true;

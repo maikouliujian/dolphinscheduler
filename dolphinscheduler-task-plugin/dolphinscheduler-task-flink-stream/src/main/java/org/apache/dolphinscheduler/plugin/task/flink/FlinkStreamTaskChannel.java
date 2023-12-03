@@ -26,6 +26,7 @@ import org.apache.dolphinscheduler.plugin.task.api.parameters.ParametersNode;
 import org.apache.dolphinscheduler.plugin.task.api.parameters.resource.ResourceParametersHelper;
 import org.apache.dolphinscheduler.plugin.task.api.stream.StreamTaskChannel;
 
+//todo FlinkStreamTaskChannel
 public class FlinkStreamTaskChannel implements StreamTaskChannel {
     @Override
     public void cancelApplication(boolean status) {
@@ -34,6 +35,7 @@ public class FlinkStreamTaskChannel implements StreamTaskChannel {
 
     @Override
     public FlinkStreamTask createTask(TaskExecutionContext taskRequest) {
+        //todo 创建flink stream task
         return new FlinkStreamTask(taskRequest);
     }
 

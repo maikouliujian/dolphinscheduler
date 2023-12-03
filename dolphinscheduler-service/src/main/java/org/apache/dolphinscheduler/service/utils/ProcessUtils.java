@@ -81,6 +81,7 @@ public class ProcessUtils {
                 if (!applicationStatus.isFinished()) {
                     String commandFile = String.format("%s/%s.kill", executePath, appId);
                     String cmd = getKerberosInitCommand() + "yarn application -kill " + appId;
+                    //todo 执行yarn kill命令
                     execYarnKillCommand(logger, tenantCode, appId, commandFile, cmd);
                 }
             } catch (Exception e) {

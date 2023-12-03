@@ -34,6 +34,7 @@ public class FlinkConstants {
      * flink sql command
      * usage: sql-client.sh -i <initialization file>, -f <script file>
      */
+    //todo 运行flinksql
     public static final String FLINK_SQL_COMMAND = "sql-client.sh";
 
     /**

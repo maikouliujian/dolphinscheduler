@@ -208,6 +208,7 @@ public abstract class AbstractCommandExecutor {
 
         // cache processId
         taskRequest.setProcessId(processId);
+        //todo 缓存task提交信息
         boolean updateTaskExecutionContextStatus =
                 TaskExecutionContextCacheManager.updateTaskExecutionContext(taskRequest);
         if (Boolean.FALSE.equals(updateTaskExecutionContextStatus)) {

@@ -68,6 +68,7 @@ public class FlinkStreamTask extends FlinkTask implements StreamTask {
      *
      * @return command
      */
+    //todo 获取启动脚本！！！！！！
     @Override
     protected String buildCommand() {
         // flink run/run-application [OPTIONS] <jar-file> <arguments>
@@ -96,7 +97,7 @@ public class FlinkStreamTask extends FlinkTask implements StreamTask {
     public AbstractParameters getParameters() {
         return flinkParameters;
     }
-
+    //todo 取消任务
     @Override
     public void cancelApplication() throws TaskException {
         List<String> appIds = getApplicationIds();
@@ -105,6 +106,7 @@ public class FlinkStreamTask extends FlinkTask implements StreamTask {
             return;
         }
         taskExecutionContext.setAppIds(String.join(TaskConstants.COMMA, appIds));
+        //todo 这里有bug
         List<String> args = FlinkArgsUtils.buildCancelCommandLine(taskExecutionContext);
 
         logger.info("cancel application args:{}", args);
@@ -117,7 +119,7 @@ public class FlinkStreamTask extends FlinkTask implements StreamTask {
             throw new TaskException("cancel application error", e);
         }
     }
-
+    //todo 打savePoint
     @Override
     public void savePoint() throws Exception {
         List<String> appIds = getApplicationIds();

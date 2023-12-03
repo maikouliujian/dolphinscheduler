@@ -96,6 +96,7 @@ public class TaskKillProcessor implements NettyRequestProcessor {
             TaskExecutionContext taskExecutionContext =
                     TaskExecutionContextCacheManager.getByTaskInstanceId(taskInstanceId);
             if (taskExecutionContext == null) {
+                //todo 如果taskExecutionContext == null,则无法执行下面cancelApplication的操作！！！！！！
                 logger.error("taskRequest cache is null, taskInstanceId: {}", killCommand.getTaskInstanceId());
                 return;
             }
@@ -112,7 +113,9 @@ public class TaskKillProcessor implements NettyRequestProcessor {
             }
 
             // if processId > 0, it should call cancelApplication to cancel remote application too.
+            //todo 执行应用shell取消，如flink cancel apppid
             this.cancelApplication(taskInstanceId);
+            //todo doKill,通过yarn的方式取消
             Pair<Boolean, List<String>> result = doKill(taskExecutionContext);
 
             taskExecutionContext.setCurrentExecutionStatus(
@@ -160,6 +163,7 @@ public class TaskKillProcessor implements NettyRequestProcessor {
         boolean processFlag = killProcess(taskExecutionContext.getTenantCode(), taskExecutionContext.getProcessId());
 
         // find log and kill yarn job
+        //todo yarn kill
         Pair<Boolean, List<String>> yarnResult = killYarnJob(Host.of(taskExecutionContext.getHost()),
                 taskExecutionContext.getLogPath(),
                 taskExecutionContext.getExecutePath(),
@@ -183,6 +187,7 @@ public class TaskKillProcessor implements NettyRequestProcessor {
             return;
         }
         try {
+            //todo task取消
             task.cancel();
         } catch (Exception e) {
             logger.error("kill task error", e);
@@ -241,7 +246,7 @@ public class TaskKillProcessor implements NettyRequestProcessor {
                 logger.info("The appId is empty");
                 return Pair.of(true, Collections.emptyList());
             }
-
+            //todo 执行yarn kill appid
             ProcessUtils.cancelApplication(appIds, logger, tenantCode, executePath);
             return Pair.of(true, appIds);
         } catch (InterruptedException e) {

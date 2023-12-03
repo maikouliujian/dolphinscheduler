@@ -68,6 +68,7 @@ public class TaskSavePointProcessor implements NettyRequestProcessor {
             logger.error("task savepoint request command is null");
             return;
         }
+        //todo savepoint命令
         logger.info("Receive task savepoint command : {}", taskSavePointRequestCommand);
 
         int taskInstanceId = taskSavePointRequestCommand.getTaskInstanceId();

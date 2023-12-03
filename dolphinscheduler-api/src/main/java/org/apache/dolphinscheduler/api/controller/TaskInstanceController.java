@@ -81,6 +81,7 @@ public class TaskInstanceController extends BaseController {
      * @param taskExecuteType task execute type
      * @return task list page
      */
+    //todo 任务-任务实例 接口
     @ApiOperation(value = "queryTaskListPaging", notes = "QUERY_TASK_INSTANCE_LIST_PAGING_NOTES")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "processInstanceId", value = "PROCESS_INSTANCE_ID", required = false, dataTypeClass = int.class, example = "100"),
@@ -180,6 +181,7 @@ public class TaskInstanceController extends BaseController {
      * @param id task instance id
      * @return the result code and msg
      */
+    //todo 停止任务
     @ApiOperation(value = "stop", notes = "TASK_INSTANCE_STOP")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "TASK_INSTANCE_ID", required = true, dataTypeClass = int.class, example = "12")
