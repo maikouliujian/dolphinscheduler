@@ -83,13 +83,14 @@ public class TaskKillProcessor implements NettyRequestProcessor {
     public void process(Channel channel, Command command) {
         Preconditions.checkArgument(CommandType.TASK_KILL_REQUEST == command.getType(),
                 String.format("invalid command type : %s", command.getType()));
+        //todo 获取master的TaskKillRequestCommand
         TaskKillRequestCommand killCommand = JSONUtils.parseObject(command.getBody(), TaskKillRequestCommand.class);
         if (killCommand == null) {
             logger.error("task kill request command is null");
             return;
         }
         logger.info("task kill command : {}", killCommand);
-
+        //todo taskid
         int taskInstanceId = killCommand.getTaskInstanceId();
         try {
             LoggerUtils.setTaskInstanceIdMDC(taskInstanceId);

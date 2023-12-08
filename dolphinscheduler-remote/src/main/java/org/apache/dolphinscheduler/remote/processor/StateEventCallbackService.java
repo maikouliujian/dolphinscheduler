@@ -120,6 +120,7 @@ public class StateEventCallbackService {
      */
     public void sendResult(Host host, Command command) {
         logger.info("send result, host:{}, command:{}", host.getAddress(), command.toString());
+        //todo host--->channel 发起rpc请求到worker
         newRemoteChannel(host).ifPresent(nettyRemoteChannel -> {
             nettyRemoteChannel.writeAndFlush(command);
         });

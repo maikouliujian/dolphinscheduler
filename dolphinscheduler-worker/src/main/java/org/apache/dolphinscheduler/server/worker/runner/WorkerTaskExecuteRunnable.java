@@ -109,7 +109,7 @@ public abstract class WorkerTaskExecuteRunnable implements Runnable {
         sendAlertIfNeeded();
 
         sendTaskResult();
-
+        //todo 这行是不是有问题？？？？？？
         TaskExecutionContextCacheManager.removeByTaskInstanceId(taskExecutionContext.getTaskInstanceId());
         logger.info("Remove the current task execute context from worker cache");
         clearTaskExecPathIfNeeded();
@@ -153,7 +153,7 @@ public abstract class WorkerTaskExecuteRunnable implements Runnable {
             LoggerUtils.setWorkflowAndTaskInstanceIDMDC(taskExecutionContext.getProcessInstanceId(),
                     taskExecutionContext.getTaskInstanceId());
             logger.info("Begin to pulling task");
-
+            //todo 初始化task
             initializeTask();
 
             if (Constants.DRY_RUN_FLAG_YES == taskExecutionContext.getDryRun()) {
@@ -166,13 +166,14 @@ public abstract class WorkerTaskExecuteRunnable implements Runnable {
                         "The current execute mode is dry run, will stop the subsequent process and set the taskInstance status to success");
                 return;
             }
-
+            //todo 执行task之前
             beforeExecute();
 
             TaskCallBack taskCallBack = TaskCallbackImpl.builder().workerMessageSender(workerMessageSender)
                     .masterAddress(masterAddress).build();
+            //todo 执行task
             executeTask(taskCallBack);
-
+            //todo 执行task之后
             afterExecute();
 
         } catch (Throwable ex) {

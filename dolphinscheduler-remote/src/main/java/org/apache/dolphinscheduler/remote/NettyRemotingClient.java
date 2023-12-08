@@ -242,6 +242,7 @@ public class NettyRemotingClient implements AutoCloseable {
             throw new RemotingException(String.format("connect to : %s fail", host));
         }
         try {
+            //todo rpc请求
             ChannelFuture future = channel.writeAndFlush(command).await();
             if (future.isSuccess()) {
                 logger.debug("send command : {} , to : {} successfully.", command, host.getAddress());

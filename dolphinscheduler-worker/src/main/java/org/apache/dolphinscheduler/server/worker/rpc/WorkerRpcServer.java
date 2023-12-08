@@ -68,7 +68,7 @@ public class WorkerRpcServer implements Closeable {
 
     @Autowired
     private WorkerConfig workerConfig;
-
+    //todo worker的server端
     private NettyRemotingServer nettyRemotingServer;
 
     public void start() {
@@ -76,6 +76,7 @@ public class WorkerRpcServer implements Closeable {
         NettyServerConfig serverConfig = new NettyServerConfig();
         serverConfig.setListenPort(workerConfig.getListenPort());
         this.nettyRemotingServer = new NettyRemotingServer(serverConfig);
+        //todo 注册不同CommandType的处理器
         this.nettyRemotingServer.registerProcessor(CommandType.TASK_DISPATCH_REQUEST, taskDispatchProcessor);
         this.nettyRemotingServer.registerProcessor(CommandType.TASK_KILL_REQUEST, taskKillProcessor);
         this.nettyRemotingServer.registerProcessor(CommandType.TASK_EXECUTE_RUNNING_ACK,

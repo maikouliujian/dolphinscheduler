@@ -275,7 +275,7 @@ public class TaskInstanceServiceImpl extends BaseServiceImpl implements TaskInst
             putMsg(result, Status.TASK_INSTANCE_NOT_FOUND);
             return result;
         }
-
+        //todo 构建TaskKillRequestCommand
         TaskKillRequestCommand command = new TaskKillRequestCommand(taskInstanceId);
         Host host = new Host(taskInstance.getHost());
         stateEventCallbackService.sendResult(host, command.convert2Command());

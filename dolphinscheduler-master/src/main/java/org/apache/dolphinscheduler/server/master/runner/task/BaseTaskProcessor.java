@@ -193,6 +193,7 @@ public abstract class BaseTaskProcessor implements ITaskProcessor {
         boolean result = false;
         try {
             switch (taskAction) {
+                //todo 停止任务！！！！！！
                 case STOP:
                     result = stop();
                     break;
@@ -261,6 +262,7 @@ public abstract class BaseTaskProcessor implements ITaskProcessor {
         if (killed) {
             return true;
         }
+        //todo
         killed = killTask();
         return killed;
     }

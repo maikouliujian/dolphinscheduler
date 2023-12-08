@@ -48,7 +48,7 @@ public class WorkerRpcClient implements AutoCloseable {
 
     @Autowired
     private TaskRejectAckProcessor taskRejectAckProcessor;
-
+    //todo worker的client端
     private NettyRemotingClient nettyRemotingClient;
 
     public void start() {

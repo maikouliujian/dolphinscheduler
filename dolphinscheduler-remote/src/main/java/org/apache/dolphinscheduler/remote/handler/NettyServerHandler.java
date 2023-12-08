@@ -80,6 +80,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        //todo 读取请求
         processReceived(ctx.channel(), (Command) msg);
     }
 
@@ -126,6 +127,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         if (pair != null) {
             Runnable r = () -> {
                 try {
+                    //todo 根据不同的commandType，找到不同的NettyRequestProcessor处理逻辑
                     pair.getLeft().process(channel, msg);
                 } catch (Exception ex) {
                     logger.error("process msg {} error", msg, ex);

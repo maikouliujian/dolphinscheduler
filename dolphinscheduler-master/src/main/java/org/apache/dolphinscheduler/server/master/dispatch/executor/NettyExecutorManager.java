@@ -153,6 +153,7 @@ public class NettyExecutorManager extends AbstractExecutorManager<Boolean> {
         boolean success = false;
         do {
             try {
+                //todo rpc请求
                 nettyRemotingClient.send(host, command);
                 success = true;
             } catch (Exception ex) {

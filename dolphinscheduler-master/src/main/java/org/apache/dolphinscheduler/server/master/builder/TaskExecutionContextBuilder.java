@@ -68,6 +68,7 @@ public class TaskExecutionContextBuilder {
         taskExecutionContext.setCurrentExecutionStatus(TaskExecutionStatus.SUBMITTED_SUCCESS);
         taskExecutionContext.setCpuQuota(taskInstance.getCpuQuota());
         taskExecutionContext.setMemoryMax(taskInstance.getMemoryMax());
+        //todo 给taskExecutionContext设置appid
         taskExecutionContext.setAppIds(taskInstance.getAppLink());
         return this;
     }

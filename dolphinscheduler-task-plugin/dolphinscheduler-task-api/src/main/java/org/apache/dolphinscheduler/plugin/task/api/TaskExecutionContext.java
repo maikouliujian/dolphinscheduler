@@ -106,6 +106,7 @@ public class TaskExecutionContext implements Serializable {
     /**
      * appIds
      */
+    //todo yarn appid
     private String appIds;
 
     /**

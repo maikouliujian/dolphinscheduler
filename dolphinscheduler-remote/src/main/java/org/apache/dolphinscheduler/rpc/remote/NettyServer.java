@@ -128,6 +128,7 @@ public class NettyServer {
      * server start
      */
     public void start() {
+        //todo netty server启动！！！！！！
         if (isStarted.compareAndSet(false, true)) {
             this.serverBootstrap
                     .group(this.bossGroup, this.workGroup)

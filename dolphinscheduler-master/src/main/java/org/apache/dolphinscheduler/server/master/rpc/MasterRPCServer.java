@@ -44,7 +44,7 @@ import org.springframework.stereotype.Service;
 public class MasterRPCServer implements AutoCloseable {
 
     private static final Logger logger = LoggerFactory.getLogger(MasterRPCServer.class);
-
+    //todo master是server端
     private NettyRemotingServer nettyRemotingServer;
 
     @Autowired
@@ -85,6 +85,7 @@ public class MasterRPCServer implements AutoCloseable {
         // init remoting server
         NettyServerConfig serverConfig = new NettyServerConfig();
         serverConfig.setListenPort(masterConfig.getListenPort());
+        //todo 不同的命令会由不同的Processor来处理
         this.nettyRemotingServer = new NettyRemotingServer(serverConfig);
         this.nettyRemotingServer.registerProcessor(CommandType.TASK_EXECUTE_RUNNING, taskExecuteRunningProcessor);
         this.nettyRemotingServer.registerProcessor(CommandType.TASK_EXECUTE_RESULT, taskExecuteResponseProcessor);

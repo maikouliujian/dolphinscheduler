@@ -152,6 +152,7 @@ public class CommonTaskProcessor extends BaseTaskProcessor {
             taskInstance.setEndTime(new Date());
             processService.updateTaskInstance(taskInstance);
             if (StringUtils.isNotEmpty(taskInstance.getHost())) {
+                //todo kill task！！！！！！
                 killRemoteTask();
             }
         } catch (Exception e) {
@@ -166,6 +167,7 @@ public class CommonTaskProcessor extends BaseTaskProcessor {
 
     private void killRemoteTask() throws ExecuteException {
         TaskKillRequestCommand killCommand = new TaskKillRequestCommand();
+        //todo taskid
         killCommand.setTaskInstanceId(taskInstance.getId());
 
         ExecutionContext executionContext =
@@ -173,7 +175,7 @@ public class CommonTaskProcessor extends BaseTaskProcessor {
 
         Host host = Host.of(taskInstance.getHost());
         executionContext.setHost(host);
-
+        //todo
         nettyExecutorManager.executeDirectly(executionContext);
     }
 }

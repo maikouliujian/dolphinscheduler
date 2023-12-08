@@ -168,7 +168,7 @@ public class NettyClient {
      * start
      */
     private void start() {
-
+        //todo netty client启动！！！！！！
         this.bootstrap
                 .group(this.workerGroup)
                 .channel(NettyUtils.getSocketChannelClass())

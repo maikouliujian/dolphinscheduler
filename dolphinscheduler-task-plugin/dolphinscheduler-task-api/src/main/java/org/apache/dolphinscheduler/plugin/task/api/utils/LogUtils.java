@@ -64,6 +64,7 @@ public class LogUtils {
                 if (matcher.find()) {
                     String appId = matcher.group();
                     if (appIds.add(appId)) {
+                        //todo 寻找到appid
                         logger.info("Find appId: {} from {}", appId, logPath);
                     }
                 }
