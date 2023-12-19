@@ -78,6 +78,7 @@ public class WorkerRpcServer implements Closeable {
         this.nettyRemotingServer = new NettyRemotingServer(serverConfig);
         //todo 注册不同CommandType的处理器
         this.nettyRemotingServer.registerProcessor(CommandType.TASK_DISPATCH_REQUEST, taskDispatchProcessor);
+        //todo task kill的逻辑
         this.nettyRemotingServer.registerProcessor(CommandType.TASK_KILL_REQUEST, taskKillProcessor);
         this.nettyRemotingServer.registerProcessor(CommandType.TASK_EXECUTE_RUNNING_ACK,
                 taskExecuteRunningAckProcessor);

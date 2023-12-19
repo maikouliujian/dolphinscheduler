@@ -433,10 +433,12 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
                         processDefinition.getVersion(), CommandType.START_FAILURE_TASK_PROCESS, startParams);
                 break;
             case STOP:
+                //todo 停止任务！！！！！！
                 if (processInstance.getState() == WorkflowExecutionStatus.READY_STOP) {
                     putMsg(result, Status.PROCESS_INSTANCE_ALREADY_CHANGED, processInstance.getName(),
                             processInstance.getState());
                 } else {
+                    //todo
                     result =
                             updateProcessInstancePrepare(processInstance, CommandType.STOP,
                                     WorkflowExecutionStatus.READY_STOP);
@@ -560,6 +562,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
         processInstance.setCommandType(commandType);
         processInstance.addHistoryCmd(commandType);
         processInstance.setStateWithDesc(executionStatus, commandType.getDescp() + "by ui");
+        //todo 更新任务状态
         int update = processInstanceDao.updateProcessInstance(processInstance);
 
         // determine whether the process is normal
@@ -571,6 +574,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
             WorkflowStateEventChangeCommand workflowStateEventChangeCommand = new WorkflowStateEventChangeCommand(
                     processInstance.getId(), 0, processInstance.getState(), processInstance.getId(), 0);
             Host host = new Host(processInstance.getHost());
+            //todo 这里发送到master
             stateEventCallbackService.sendResult(host, workflowStateEventChangeCommand.convert2Command());
             putMsg(result, Status.SUCCESS);
         } else {

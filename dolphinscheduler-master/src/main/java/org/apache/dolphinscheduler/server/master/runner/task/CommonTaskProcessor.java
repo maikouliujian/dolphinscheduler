@@ -148,6 +148,7 @@ public class CommonTaskProcessor extends BaseTaskProcessor {
                 return true;
             }
             // we don't wait the kill response
+            //todo 更改task状态！！！！！！
             taskInstance.setState(TaskExecutionStatus.KILL);
             taskInstance.setEndTime(new Date());
             processService.updateTaskInstance(taskInstance);
@@ -169,13 +170,13 @@ public class CommonTaskProcessor extends BaseTaskProcessor {
         TaskKillRequestCommand killCommand = new TaskKillRequestCommand();
         //todo taskid
         killCommand.setTaskInstanceId(taskInstance.getId());
-
+        //todo TASK_KILL_REQUEST
         ExecutionContext executionContext =
                 new ExecutionContext(killCommand.convert2Command(), ExecutorType.WORKER, taskInstance);
 
         Host host = Host.of(taskInstance.getHost());
         executionContext.setHost(host);
-        //todo
+        //todo master发送rpc请求到worker,最终调用到TaskKillProcessor
         nettyExecutorManager.executeDirectly(executionContext);
     }
 }

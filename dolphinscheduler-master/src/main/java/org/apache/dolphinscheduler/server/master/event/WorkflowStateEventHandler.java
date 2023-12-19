@@ -38,7 +38,7 @@ public class WorkflowStateEventHandler implements StateEventHandler {
         measureProcessState(workflowStateEvent);
         ProcessInstance processInstance = workflowExecuteRunnable.getProcessInstance();
         ProcessDefinition processDefinition = processInstance.getProcessDefinition();
-
+        //todo ！！！！！！
         logger.info(
                 "Handle workflow instance state event, the current workflow instance state {} will be changed to {}",
                 processInstance.getState(), workflowStateEvent.getStatus());
@@ -59,6 +59,7 @@ public class WorkflowStateEventHandler implements StateEventHandler {
         if (workflowStateEvent.getStatus().isFinished()) {
             workflowExecuteRunnable.endProcess();
         }
+        //todo kill task逻辑！！！！！！
         if (processInstance.getState().isReadyStop()) {
             workflowExecuteRunnable.killAllTasks();
         }

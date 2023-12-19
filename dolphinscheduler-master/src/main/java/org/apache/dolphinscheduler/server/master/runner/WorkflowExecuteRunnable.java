@@ -285,6 +285,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
                                 .orElseThrow(() -> new StateEventHandleError(
                                         "Cannot find handler for the given state event"));
                 logger.info("Begin to handle state event, {}", stateEvent);
+                //todo
                 if (stateEventHandler.handleStateEvent(this, stateEvent)) {
                     this.stateEvents.remove(stateEvent);
                 }
@@ -506,6 +507,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
      */
     public void refreshTaskInstance(int taskInstanceId) {
         logger.info("task instance update: {} ", taskInstanceId);
+        //todo 找到task
         TaskInstance taskInstance = processService.findTaskInstanceById(taskInstanceId);
         if (taskInstance == null) {
             logger.error("can not find task instance, id:{}", taskInstanceId);
@@ -1769,6 +1771,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
      * close the on going tasks
      */
     public void killAllTasks() {
+        //todo！！！！！！！
         logger.info("kill called on process instance id: {}, num: {}",
                 processInstance.getId(),
                 activeTaskProcessorMaps.size());
@@ -1789,6 +1792,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
                 if (taskInstance == null || taskInstance.getState().isFinished()) {
                     continue;
                 }
+                //todo 这里是master kill任务的逻辑
                 taskProcessor.action(TaskAction.STOP);
                 if (taskProcessor.taskInstance().getState().isFinished()) {
                     TaskStateEvent taskStateEvent = TaskStateEvent.builder()

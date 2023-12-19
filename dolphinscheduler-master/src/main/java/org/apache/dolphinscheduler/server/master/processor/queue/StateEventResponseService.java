@@ -118,6 +118,7 @@ public class StateEventResponseService {
                     StateEvent stateEvent = eventQueue.take();
                     LoggerUtils.setWorkflowAndTaskInstanceIDMDC(stateEvent.getProcessInstanceId(),
                             stateEvent.getTaskInstanceId());
+                    //todo
                     persist(stateEvent);
                 } catch (InterruptedException e) {
                     logger.warn("State event loop service interrupted, will stop this loop", e);
@@ -156,6 +157,7 @@ public class StateEventResponseService {
                     workflowExecuteThread.refreshTaskInstance(stateEvent.getTaskInstanceId());
                     break;
                 case PROCESS_STATE_CHANGE:
+                    //todo
                     workflowExecuteThread.refreshProcessInstance(stateEvent.getProcessInstanceId());
                     break;
                 default:

@@ -181,7 +181,7 @@ public class TaskInstanceController extends BaseController {
      * @param id task instance id
      * @return the result code and msg
      */
-    //todo 停止任务
+    //todo flink停止任务
     @ApiOperation(value = "stop", notes = "TASK_INSTANCE_STOP")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "TASK_INSTANCE_ID", required = true, dataTypeClass = int.class, example = "12")

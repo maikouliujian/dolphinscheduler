@@ -56,6 +56,7 @@ public class StateEventProcessor implements NettyRequestProcessor {
                 JSONUtils.parseObject(command.getBody(), WorkflowStateEventChangeCommand.class);
         StateEvent stateEvent;
         if (workflowStateEventChangeCommand.getDestTaskInstanceId() == 0) {
+            //todo
             stateEvent = createWorkflowStateEvent(workflowStateEventChangeCommand);
         } else {
             stateEvent = createTaskStateEvent(workflowStateEventChangeCommand);
@@ -64,7 +65,7 @@ public class StateEventProcessor implements NettyRequestProcessor {
         try {
             LoggerUtils.setWorkflowAndTaskInstanceIDMDC(stateEvent.getProcessInstanceId(),
                     stateEvent.getTaskInstanceId());
-
+            //todo
             logger.info("Received state change command, event: {}", stateEvent);
             stateEventResponseService.addStateChangeEvent(stateEvent);
         } finally {

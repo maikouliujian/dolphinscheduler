@@ -48,6 +48,7 @@ public class WorkflowStateEventChangeCommand implements Serializable {
                                            WorkflowExecutionStatus sourceStatus,
                                            int destProcessInstanceId,
                                            int destTaskInstanceId) {
+        //todo key=30281-0-30281-0
         this.key = String.format("%d-%d-%d-%d",
                 sourceProcessInstanceId,
                 sourceTaskInstanceId,
