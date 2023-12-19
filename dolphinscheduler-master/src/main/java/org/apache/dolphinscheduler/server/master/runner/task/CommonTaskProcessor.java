@@ -173,7 +173,7 @@ public class CommonTaskProcessor extends BaseTaskProcessor {
         //todo TASK_KILL_REQUEST
         ExecutionContext executionContext =
                 new ExecutionContext(killCommand.convert2Command(), ExecutorType.WORKER, taskInstance);
-
+        //todo 拿到worker节点的host
         Host host = Host.of(taskInstance.getHost());
         executionContext.setHost(host);
         //todo master发送rpc请求到worker,最终调用到TaskKillProcessor
