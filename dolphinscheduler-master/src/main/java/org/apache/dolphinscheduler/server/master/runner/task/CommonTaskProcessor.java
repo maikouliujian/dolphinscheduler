@@ -87,7 +87,7 @@ public class CommonTaskProcessor extends BaseTaskProcessor {
     public String getType() {
         return Constants.COMMON_TASK_TYPE;
     }
-
+    //todo 分发task
     @Override
     public boolean dispatchTask() {
         try {
@@ -106,6 +106,7 @@ public class CommonTaskProcessor extends BaseTaskProcessor {
                         taskInstance.getName(), taskInstance.getState());
                 return true;
             }
+            //todo！！！！！！
             logger.info("Task {} is ready to dispatch to worker", taskInstance.getName());
 
             TaskPriority taskPriority = new TaskPriority(processInstance.getProcessInstancePriority().getCode(),

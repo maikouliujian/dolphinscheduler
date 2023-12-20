@@ -156,7 +156,7 @@ public class MasterSchedulerBootstrap extends BaseDaemonThread implements AutoCl
                     Thread.sleep(Constants.SLEEP_TIME_MILLIS);
                     continue;
                 }
-
+                //todo ！！！！！！
                 List<ProcessInstance> processInstances = command2ProcessInstance(commands);
                 if (CollectionUtils.isEmpty(processInstances)) {
                     // indicate that the command transform to processInstance error, sleep for 1s
@@ -181,6 +181,7 @@ public class MasterSchedulerBootstrap extends BaseDaemonThread implements AutoCl
                                 stateWheelExecuteThread,
                                 curingGlobalParamsService);
                         processInstanceExecCacheManager.cache(processInstance.getId(), workflowRunnable);
+                        //todo 添加START_WORKFLOW 事件
                         workflowEventQueue.addEvent(new WorkflowEvent(WorkflowEventType.START_WORKFLOW,
                                 processInstance.getId()));
                     } finally {
@@ -198,7 +199,7 @@ public class MasterSchedulerBootstrap extends BaseDaemonThread implements AutoCl
             }
         }
     }
-
+    //todo 启动恢复的任务
     private List<ProcessInstance> command2ProcessInstance(List<Command> commands) throws InterruptedException {
         long commandTransformStartTime = System.currentTimeMillis();
         logger.info("Master schedule bootstrap transforming command to ProcessInstance, commandSize: {}",
@@ -220,6 +221,7 @@ public class MasterSchedulerBootstrap extends BaseDaemonThread implements AutoCl
                     }
                     ProcessInstance processInstance = processService.handleCommand(masterAddress, command);
                     if (processInstance != null) {
+                        //todo ！！！！！！
                         processInstances.add(processInstance);
                         logger.info("Master handle command {} end, create process instance {}", command.getId(),
                                 processInstance.getId());

@@ -692,16 +692,19 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
         try {
             LoggerUtils.setWorkflowInstanceIdMDC(processInstance.getId());
             if (workflowRunnableStatus == WorkflowRunnableStatus.CREATED) {
+                //todo 故障恢复
                 buildFlowDag();
                 workflowRunnableStatus = WorkflowRunnableStatus.INITIALIZE_DAG;
                 logger.info("workflowStatue changed to :{}", workflowRunnableStatus);
             }
             if (workflowRunnableStatus == WorkflowRunnableStatus.INITIALIZE_DAG) {
+                //todo！！！！！！
                 initTaskQueue();
                 workflowRunnableStatus = WorkflowRunnableStatus.INITIALIZE_QUEUE;
                 logger.info("workflowStatue changed to :{}", workflowRunnableStatus);
             }
             if (workflowRunnableStatus == WorkflowRunnableStatus.INITIALIZE_QUEUE) {
+                //todo！！！！！！
                 submitPostNode(null);
                 workflowRunnableStatus = WorkflowRunnableStatus.STARTED;
                 logger.info("workflowStatue changed to :{}", workflowRunnableStatus);
@@ -804,6 +807,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
             return;
         }
         // generate process dag
+        //todo ！！！！！！！
         dag = DagHelper.buildDagGraph(processDag);
         logger.info("Build dag success, dag: {}", dag);
     }
@@ -820,6 +824,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
         errorTaskMap.clear();
 
         if (!isNewProcessInstance()) {
+            //todo 故障恢复的任务
             logger.info("The workflowInstance is not a newly running instance, runtimes: {}, recover flag: {}",
                     processInstance.getRunTimes(),
                     processInstance.getRecovery());
@@ -858,12 +863,14 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
                     }
                     if (task.taskCanRetry()) {
                         if (task.getState().isNeedFaultTolerance()) {
+                            //todo
                             logger.info("TaskInstance needs fault tolerance, will be added to standby list.");
                             task.setFlag(Flag.NO);
                             processService.updateTaskInstance(task);
 
                             // tolerantTaskInstance add to standby list directly
                             TaskInstance tolerantTaskInstance = cloneTolerantTaskInstance(task);
+                            //todo
                             addTaskToStandByList(tolerantTaskInstance);
                         } else {
                             logger.info("Retry taskInstance, taskState: {}", task.getState());
@@ -945,7 +952,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
                     && taskProcessor.getType().equalsIgnoreCase(Constants.COMMON_TASK_TYPE)) {
                 notifyProcessHostUpdate(taskInstance);
             }
-
+            //todo 提交task
             boolean submit = taskProcessor.action(TaskAction.SUBMIT);
             if (!submit) {
                 logger.error("Submit standby task failed!, taskCode: {}, taskName: {}",
@@ -1730,6 +1737,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
      *
      * @param taskInstance task instance
      */
+    //todo 故障恢复
     public void addTaskToStandByList(TaskInstance taskInstance) {
         if (readyToSubmitTaskQueue.contains(taskInstance)) {
             logger.warn("Task already exists in ready submit queue, no need to add again, task code:{}",
@@ -1845,7 +1853,9 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
             }
             DependResult dependResult = getDependResultForTask(task);
             if (DependResult.SUCCESS == dependResult) {
+                //todo！！！！！！！
                 logger.info("The dependResult of task {} is success, so ready to submit to execute", task.getName());
+                //todo 提交故障恢复的task
                 Optional<TaskInstance> taskInstanceOptional = submitTaskExec(task);
                 if (!taskInstanceOptional.isPresent()) {
                     this.taskFailedSubmit = true;
@@ -1973,6 +1983,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
      * is new process instance
      */
     private boolean isNewProcessInstance() {
+        //todo 故障恢复的任务！！！！！！
         if (Flag.YES.equals(processInstance.getRecovery())) {
             logger.info("This workInstance will be recover by this execution");
             return false;

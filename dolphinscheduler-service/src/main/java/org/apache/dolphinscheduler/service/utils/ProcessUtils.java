@@ -188,6 +188,7 @@ public class ProcessUtils {
      * @param taskExecutionContext taskExecutionContext
      * @return yarn application ids
      */
+    //todo 如果是在pod里,日志都没了！！！！！！
     public static @Nullable List<String> killYarnJob(@NonNull LogClient logClient,
                                                      @NonNull TaskExecutionContext taskExecutionContext) {
         if (taskExecutionContext.getLogPath() == null) {

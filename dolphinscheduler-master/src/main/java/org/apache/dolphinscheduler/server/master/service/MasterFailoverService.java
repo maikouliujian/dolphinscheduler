@@ -132,11 +132,13 @@ public class MasterFailoverService {
      *
      * @param masterHost master host
      */
+    //todo 如果故障重启，会调用这里
     private void doFailoverMaster(@NonNull String masterHost) {
         StopWatch failoverTimeCost = StopWatch.createStarted();
 
         Optional<Date> masterStartupTimeOptional = getServerStartupTime(registryClient.getServerList(NodeType.MASTER),
                 masterHost);
+        //todo 获取非完成状态的task
         List<ProcessInstance> needFailoverProcessInstanceList = processService.queryNeedFailoverProcessInstances(
                 masterHost);
         if (CollectionUtils.isEmpty(needFailoverProcessInstanceList)) {
@@ -169,10 +171,12 @@ public class MasterFailoverService {
                     try {
                         LoggerUtils.setTaskInstanceIdMDC(taskInstance.getId());
                         LOGGER.info("TaskInstance failover starting");
+                        //todo 状态是Finished的task不需要恢复！！！！！！
                         if (!checkTaskInstanceNeedFailover(taskInstance)) {
                             LOGGER.info("The taskInstance doesn't need to failover");
                             continue;
                         }
+                        //todo
                         failoverTaskInstance(processInstance, taskInstance);
                         LOGGER.info("TaskInstance failover finished");
                     } finally {
@@ -238,6 +242,7 @@ public class MasterFailoverService {
             if (masterConfig.isKillYarnJobWhenTaskFailover()) {
                 // only kill yarn job if exists , the local thread has exited
                 LOGGER.info("TaskInstance failover begin kill the task related yarn job");
+                //todo 重启以后杀死原先的任务，这里有个问题，如果task的执行日志丢失(比如在pod中启动,pod重启日志会丢失),则可能杀不死任务
                 ProcessUtils.killYarnJob(logClient, taskExecutionContext);
             }
             // kill worker task, When the master failover and worker failover happened in the same time,
@@ -247,7 +252,7 @@ public class MasterFailoverService {
         } else {
             LOGGER.info("The failover taskInstance is a master task");
         }
-
+        //todo 更改task的状态！！！！！！！NEED_FAULT_TOLERANCE
         taskInstance.setState(TaskExecutionStatus.NEED_FAULT_TOLERANCE);
         processService.saveTaskInstance(taskInstance);
     }
