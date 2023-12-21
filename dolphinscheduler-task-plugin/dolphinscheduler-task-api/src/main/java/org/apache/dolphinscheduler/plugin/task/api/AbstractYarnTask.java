@@ -57,6 +57,7 @@ public abstract class AbstractYarnTask extends AbstractRemoteTask {
     public void handle(TaskCallBack taskCallBack) throws TaskException {
         try {
             // SHELL task exit code
+            //todo 【这一步是阻塞的！！！！！！】
             TaskResponse response = shellCommandExecutor.run(buildCommand());
             setExitStatusCode(response.getExitStatusCode());
             // set appIds

@@ -250,7 +250,7 @@ public abstract class WorkerTaskExecuteRunnable implements Runnable {
                 taskAlertInfo.getContent(), strategy);
         logger.info("Success send alert");
     }
-
+    //todo 发送task执行结果！！！！！！任务运行结束了才有AppIds
     protected void sendTaskResult() {
         taskExecutionContext.setCurrentExecutionStatus(task.getExitStatus());
         taskExecutionContext.setEndTime(new Date());
