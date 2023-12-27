@@ -93,7 +93,7 @@ public class WorkflowExecuteThreadPool extends ThreadPoolTaskExecutor {
                     stateEvent);
             return;
         }
-        //todo
+        //todo 添加StateEvent
         workflowExecuteThread.addStateEvent(stateEvent);
         logger.info("Submit state event success, stateEvent: {}", stateEvent);
     }
@@ -111,6 +111,7 @@ public class WorkflowExecuteThreadPool extends ThreadPoolTaskExecutor {
         }
         multiThreadFilterMap.put(workflowExecuteThread.getKey(), workflowExecuteThread);
         int processInstanceId = workflowExecuteThread.getProcessInstance().getId();
+        //todo 处理event
         ListenableFuture<?> future = this.submitListenable(workflowExecuteThread::handleEvents);
         future.addCallback(new ListenableFutureCallback() {
 

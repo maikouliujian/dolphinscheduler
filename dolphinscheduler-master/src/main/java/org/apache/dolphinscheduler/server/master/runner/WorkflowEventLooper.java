@@ -73,13 +73,13 @@ public class WorkflowEventLooper extends BaseDaemonThread {
         WorkflowEvent workflowEvent = null;
         while (!ServerLifeCycleManager.isStopped()) {
             try {
-                //todo 处理event
+                //todo 取出workflowEvent
                 workflowEvent = workflowEventQueue.poolEvent();
                 LoggerUtils.setWorkflowInstanceIdMDC(workflowEvent.getWorkflowInstanceId());
                 logger.info("Workflow event looper receive a workflow event: {}, will handle this", workflowEvent);
                 WorkflowEventHandler workflowEventHandler =
                         workflowEventHandlerMap.get(workflowEvent.getWorkflowEventType());
-                //todo
+                //todo WorkflowStartEventHandler处理workflowEvent,Workflow开始启动！！！！！！
                 workflowEventHandler.handleWorkflowEvent(workflowEvent);
             } catch (InterruptedException e) {
                 logger.warn("WorkflowEventLooper thread is interrupted, will close this loop", e);

@@ -285,7 +285,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
                                 .orElseThrow(() -> new StateEventHandleError(
                                         "Cannot find handler for the given state event"));
                 logger.info("Begin to handle state event, {}", stateEvent);
-                //todo
+                //todo 处理StateEvent！！！！！！
                 if (stateEventHandler.handleStateEvent(this, stateEvent)) {
                     this.stateEvents.remove(stateEvent);
                 }
@@ -593,7 +593,9 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
         processAlertManager.sendProcessBlockingAlert(processInstance, projectUser);
         logger.info("processInstance {} block alert send successful!", processInstance.getId());
     }
-
+    //todo 处理补数逻辑！！！！！！
+    //todo 1、获取补数时间
+    //todo 2、计算下一次补数命令
     public boolean processComplementData() {
         if (!needComplementProcess()) {
             return false;
@@ -630,6 +632,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
             scheduleDate = complementListDate.get(index + 1);
         }
         // the next process complement
+        //todo 创建下一次补数的command！！！！！！
         int create = this.createComplementDataCommand(scheduleDate);
         if (create > 0) {
             logger.info("create complement data command successfully.");
@@ -671,6 +674,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
         command.setDryRun(processInstance.getDryRun());
         command.setProcessInstanceId(0);
         command.setProcessDefinitionVersion(processInstance.getProcessDefinitionVersion());
+        //todo 将补数command存入db
         return processService.createCommand(command);
     }
 
@@ -692,19 +696,20 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
         try {
             LoggerUtils.setWorkflowInstanceIdMDC(processInstance.getId());
             if (workflowRunnableStatus == WorkflowRunnableStatus.CREATED) {
-                //todo 故障恢复
+                //todo 构建dag
                 buildFlowDag();
                 workflowRunnableStatus = WorkflowRunnableStatus.INITIALIZE_DAG;
                 logger.info("workflowStatue changed to :{}", workflowRunnableStatus);
             }
             if (workflowRunnableStatus == WorkflowRunnableStatus.INITIALIZE_DAG) {
-                //todo！！！！！！
+                //todo 初始化task queue
+                //todo 包含补数的逻辑！！！！！！
                 initTaskQueue();
                 workflowRunnableStatus = WorkflowRunnableStatus.INITIALIZE_QUEUE;
                 logger.info("workflowStatue changed to :{}", workflowRunnableStatus);
             }
             if (workflowRunnableStatus == WorkflowRunnableStatus.INITIALIZE_QUEUE) {
-                //todo！！！！！！
+                //todo 启动任务
                 submitPostNode(null);
                 workflowRunnableStatus = WorkflowRunnableStatus.STARTED;
                 logger.info("workflowStatue changed to :{}", workflowRunnableStatus);
@@ -888,7 +893,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
         } else {
             logger.info("The current workflowInstance is a newly running workflowInstance");
         }
-
+        //todo 补数的逻辑！！！！！！初始化补数对应的时间参数
         if (processInstance.isComplementData() && complementListDate.isEmpty()) {
             Map<String, String> cmdParam = JSONUtils.toMap(processInstance.getCommandParam());
             if (cmdParam != null) {

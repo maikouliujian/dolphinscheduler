@@ -413,6 +413,7 @@ public class ProcessServiceImpl implements ProcessService {
             command.setCommandParam(JSONUtils.toJsonString(commandParams));
         }
         command.setId(null);
+        //todo 存入command
         result = commandMapper.insert(command);
         return result;
     }

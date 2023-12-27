@@ -219,6 +219,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
         /**
          * create command
          */
+        //todo 创建执行命令
         int create =
                 this.createCommand(commandType, processDefinition.getCode(), taskDependType, failureStrategy,
                         startNodeList,
@@ -766,6 +767,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
         command.setProcessInstanceId(0);
 
         // determine whether to complement
+        //todo 补数的逻辑
         if (commandType == CommandType.COMPLEMENT_DATA) {
             if (schedule == null || StringUtils.isEmpty(schedule)) {
                 logger.error("Create {} type command error because parameter schedule is invalid.",
@@ -909,6 +911,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
                                     DateUtils.dateToString(listDate.get(endDateIndex)));
                             command.setCommandParam(JSONUtils.toJsonString(cmdParam));
                             logger.info("Creating command, commandInfo:{}.", command);
+                            //todo 将command存入db，后续由MasterSchedulerBootstrap轮训分发！！！！！！
                             if (processService.createCommand(command) > 0)
                                 logger.info("Create {} command complete, processDefinitionCode:{}",
                                         command.getCommandType().getDescp(), command.getProcessDefinitionCode());

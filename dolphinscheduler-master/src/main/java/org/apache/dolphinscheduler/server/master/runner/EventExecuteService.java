@@ -62,6 +62,7 @@ public class EventExecuteService extends BaseDaemonThread {
     public void run() {
         while (!ServerLifeCycleManager.isStopped()) {
             try {
+                //todo 处理workflow event
                 workflowEventHandler();
                 streamTaskEventHandler();
                 TimeUnit.MILLISECONDS.sleep(Constants.SLEEP_TIME_MILLIS_SHORT);
@@ -79,6 +80,7 @@ public class EventExecuteService extends BaseDaemonThread {
         for (WorkflowExecuteRunnable workflowExecuteThread : this.processInstanceExecCacheManager.getAll()) {
             try {
                 LoggerUtils.setWorkflowInstanceIdMDC(workflowExecuteThread.getProcessInstance().getId());
+                //todo executeEvent
                 workflowExecuteThreadPool.executeEvent(workflowExecuteThread);
 
             } finally {

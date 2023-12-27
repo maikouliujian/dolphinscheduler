@@ -33,6 +33,7 @@ public class WorkflowEventQueue {
     /**
      * Add a workflow event.
      */
+    //todo 向队列添加workflowEvent
     public void addEvent(WorkflowEvent workflowEvent) {
         workflowEventQueue.add(workflowEvent);
         logger.info("Added workflow event to workflowEvent queue, event: {}", workflowEvent);
@@ -41,6 +42,7 @@ public class WorkflowEventQueue {
     /**
      * Pool the head of the workflow event queue and wait an workflow event.
      */
+    //todo 从队列取出workflowEvent
     public WorkflowEvent poolEvent() throws InterruptedException {
         return workflowEventQueue.take();
     }

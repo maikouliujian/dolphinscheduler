@@ -61,7 +61,7 @@ public class WorkflowStartEventHandler implements WorkflowEventHandler {
         }
         ProcessInstanceMetrics.incProcessInstanceByState("submit");
         ProcessInstance processInstance = workflowExecuteRunnable.getProcessInstance();
-        //todo 异步启动任务
+        //todo 异步启动任务workflowExecuteRunnable::call
         CompletableFuture.supplyAsync(workflowExecuteRunnable::call, workflowExecuteThreadPool)
             .thenAccept(workflowSubmitStatue -> {
                 if (WorkflowSubmitStatue.SUCCESS == workflowSubmitStatue) {
