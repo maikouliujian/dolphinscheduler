@@ -778,6 +778,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
             try {
                 logger.info("Start to create {} command, processDefinitionCode:{}.",
                         command.getCommandType().getDescp(), processDefineCode);
+                //todo 创建补数的命令
                 return createComplementCommandList(schedule, runMode, command, expectedParallelismNumber,
                         complementDependentMode);
             } catch (CronParseException cronParseException) {
@@ -799,6 +800,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
      * @param runMode
      * @return
      */
+    //todo 创建补数list
     protected int createComplementCommandList(String scheduleTimeParam, RunMode runMode, Command command,
                                               Integer expectedParallelismNumber,
                                               ComplementDependentMode complementDependentMode) throws CronParseException {
@@ -862,6 +864,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
                 }
                 break;
             }
+            //todo 并行跑
             case RUN_MODE_PARALLEL: {
                 logger.info("RunMode of {} command is parallel run, processDefinitionCode:{}.",
                         command.getCommandType().getDescp(), command.getProcessDefinitionCode());
@@ -887,7 +890,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
                         int remainingItems = (listDateSize % createCount);
                         int startDateIndex = 0;
                         int endDateIndex = 0;
-
+                        //todo 轮训创建命令！！！！！！
                         for (int i = 1; i <= createCount; i++) {
                             int extra = (i <= remainingItems) ? 1 : 0;
                             int singleCommandItems = (itemsPerCommand + extra);
@@ -898,9 +901,10 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
                                 startDateIndex = endDateIndex + 1;
                                 endDateIndex += singleCommandItems;
                             }
-
+                            //todo 补数开始时间
                             cmdParam.put(CMD_PARAM_COMPLEMENT_DATA_START_DATE,
                                     DateUtils.dateToString(listDate.get(startDateIndex)));
+                            //todo 补数结束时间
                             cmdParam.put(CMD_PARAM_COMPLEMENT_DATA_END_DATE,
                                     DateUtils.dateToString(listDate.get(endDateIndex)));
                             command.setCommandParam(JSONUtils.toJsonString(cmdParam));

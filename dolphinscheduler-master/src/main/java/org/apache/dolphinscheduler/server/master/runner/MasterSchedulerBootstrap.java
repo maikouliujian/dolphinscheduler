@@ -150,13 +150,14 @@ public class MasterSchedulerBootstrap extends BaseDaemonThread implements AutoCl
                     Thread.sleep(Constants.SLEEP_TIME_MILLIS);
                     continue;
                 }
+                //todo master轮训去数据库里查询command
                 List<Command> commands = findCommands();
                 if (CollectionUtils.isEmpty(commands)) {
                     // indicate that no command ,sleep for 1s
                     Thread.sleep(Constants.SLEEP_TIME_MILLIS);
                     continue;
                 }
-                //todo ！！！！！！
+                //todo 将command转为ProcessInstance
                 List<ProcessInstance> processInstances = command2ProcessInstance(commands);
                 if (CollectionUtils.isEmpty(processInstances)) {
                     // indicate that the command transform to processInstance error, sleep for 1s

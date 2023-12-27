@@ -211,6 +211,7 @@ public abstract class BaseTaskProcessor implements ITaskProcessor {
                     result = run();
                     break;
                 case DISPATCH:
+                    //todo 分发任务
                     result = dispatch();
                     break;
                 case RESUBMIT:

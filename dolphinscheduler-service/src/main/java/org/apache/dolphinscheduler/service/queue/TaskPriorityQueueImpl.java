@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 /**
  * A singleton of a task queue implemented using PriorityBlockingQueue
  */
+//todo 【所有的任务分发共享的队列】
 @Service
 public class TaskPriorityQueueImpl implements TaskPriorityQueue<TaskPriority> {
 
@@ -41,6 +42,7 @@ public class TaskPriorityQueueImpl implements TaskPriorityQueue<TaskPriority> {
      *
      * @param taskPriorityInfo takePriorityInfo
      */
+    //todo 向队列添加任务
     @Override
     public void put(TaskPriority taskPriorityInfo) {
         queue.put(taskPriorityInfo);

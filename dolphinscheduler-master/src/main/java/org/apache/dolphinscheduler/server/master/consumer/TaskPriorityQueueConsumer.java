@@ -125,6 +125,7 @@ public class TaskPriorityQueueConsumer extends BaseDaemonThread {
         int fetchTaskNum = masterConfig.getDispatchTaskNumber();
         while (!ServerLifeCycleManager.isStopped()) {
             try {
+                //todo 分发任务
                 List<TaskPriority> failedDispatchTasks = this.batchDispatch(fetchTaskNum);
 
                 if (CollectionUtils.isNotEmpty(failedDispatchTasks)) {
@@ -162,6 +163,7 @@ public class TaskPriorityQueueConsumer extends BaseDaemonThread {
 
             consumerThreadPoolExecutor.submit(() -> {
                 try {
+                    //todo 分发task
                     boolean dispatchResult = this.dispatchTask(taskPriority);
                     if (!dispatchResult) {
                         failedDispatchTasks.add(taskPriority);
@@ -204,6 +206,7 @@ public class TaskPriorityQueueConsumer extends BaseDaemonThread {
             }
             TaskInstance taskInstance = taskInstanceOptional.get();
             TaskExecutionContext context = taskPriority.getTaskExecutionContext();
+            //todo 任务分发context
             ExecutionContext executionContext =
                     new ExecutionContext(toCommand(context), ExecutorType.WORKER, context.getWorkerGroup(),
                             taskInstance);
@@ -216,7 +219,7 @@ public class TaskPriorityQueueConsumer extends BaseDaemonThread {
                     return true;
                 }
             }
-
+            //todo master向worker分发任务
             result = dispatcher.dispatch(executionContext);
 
             if (result) {
@@ -250,6 +253,7 @@ public class TaskPriorityQueueConsumer extends BaseDaemonThread {
                 masterConfig.getMasterAddress(),
                 taskExecutionContext.getHost(),
                 System.currentTimeMillis());
+        //todo 分发命令
         return requestCommand.convert2Command();
     }
 
