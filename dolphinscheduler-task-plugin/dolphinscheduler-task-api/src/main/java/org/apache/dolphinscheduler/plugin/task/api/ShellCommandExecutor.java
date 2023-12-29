@@ -106,6 +106,7 @@ public class ShellCommandExecutor extends AbstractCommandExecutor {
             sb.append("#!/bin/bash\n");
             sb.append("BASEDIR=$(cd `dirname $0`; pwd)\n");
             sb.append("cd $BASEDIR\n");
+            //todo 在ui界面安全中心---环境管理---创建环境 如果给worker分组创建了环境配置，则执行shell脚本时会选用配置的环境变量，而不去选择/script/env/dolphinscheduler_env.sh 作为环境变量了
             if (StringUtils.isNotBlank(taskRequest.getEnvironmentConfig())) {
                 sb.append(taskRequest.getEnvironmentConfig()).append("\n");
             } else {
