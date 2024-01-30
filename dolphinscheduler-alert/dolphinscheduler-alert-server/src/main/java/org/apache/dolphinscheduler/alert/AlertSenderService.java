@@ -111,6 +111,7 @@ public final class AlertSenderService extends Thread {
             int sendSuccessCount = 0;
             List<AlertResult> alertResults = new ArrayList<>();
             for (AlertPluginInstance instance : alertInstanceList) {
+                //todo 获取报警实例
                 AlertResult alertResult = this.alertResultHandler(instance, alertData);
                 if (alertResult != null) {
                     AlertStatus sendStatus = Boolean.parseBoolean(String.valueOf(alertResult.getStatus()))
@@ -189,6 +190,7 @@ public final class AlertSenderService extends Thread {
     private @Nullable AlertResult alertResultHandler(AlertPluginInstance instance, AlertData alertData) {
         String pluginInstanceName = instance.getInstanceName();
         int pluginDefineId = instance.getPluginDefineId();
+        //todo 根据id获取报警对象
         Optional<AlertChannel> alertChannelOptional = alertPluginManager.getAlertChannel(instance.getPluginDefineId());
         if (!alertChannelOptional.isPresent()) {
             String message = String.format("Alert Plugin %s send error: the channel doesn't exist, pluginDefineId: %s",
@@ -197,6 +199,7 @@ public final class AlertSenderService extends Thread {
             logger.error("Alert Plugin {} send error : not found plugin {}", pluginInstanceName, pluginDefineId);
             return new AlertResult("false", message);
         }
+        //todo 获取chanenl
         AlertChannel alertChannel = alertChannelOptional.get();
 
         Map<String, String> paramsMap = JSONUtils.toMap(instance.getPluginInstanceParams());
@@ -254,6 +257,7 @@ public final class AlertSenderService extends Thread {
                 if (alertData.getAlertType() == AlertType.CLOSE_ALERT.getCode()) {
                     alertResult = alertChannel.closeAlert(alertInfo);
                 } else {
+                    //todo 不同的报警实例分别发送报警！！！！！！
                     alertResult = alertChannel.process(alertInfo);
                 }
             } else {

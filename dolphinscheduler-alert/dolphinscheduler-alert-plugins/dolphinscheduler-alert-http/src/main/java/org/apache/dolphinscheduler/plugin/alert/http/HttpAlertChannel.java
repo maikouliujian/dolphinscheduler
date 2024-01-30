@@ -32,7 +32,7 @@ public final class HttpAlertChannel implements AlertChannel {
         if (null == paramsMap) {
             return new AlertResult("false", "http params is null");
         }
-
+        //todo 发送报警
         return new HttpSender(paramsMap).send(alertData.getContent());
     }
 }

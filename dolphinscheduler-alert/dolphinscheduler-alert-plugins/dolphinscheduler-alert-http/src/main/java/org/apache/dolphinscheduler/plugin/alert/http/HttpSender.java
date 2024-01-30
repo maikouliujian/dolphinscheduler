@@ -88,6 +88,7 @@ public final class HttpSender {
         }
 
         try {
+            //todo 发送http请求
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
             CloseableHttpResponse response = httpClient.execute(httpRequest);
             HttpEntity entity = response.getEntity();

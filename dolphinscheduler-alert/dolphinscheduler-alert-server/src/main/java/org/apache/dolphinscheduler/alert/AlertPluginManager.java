@@ -68,17 +68,17 @@ public final class AlertPluginManager {
                         .addValidate(Validate.newBuilder().setRequired(true).build())
                         .build();
     }
-
+    //todo 代表applicaition ready后，加载该方法
     @EventListener
     public void installPlugin(ApplicationReadyEvent readyEvent) {
-
+        //todo 通过spi加载各个报警类工厂
         PrioritySPIFactory<AlertChannelFactory> prioritySPIFactory = new PrioritySPIFactory<>(AlertChannelFactory.class);
         for (Map.Entry<String, AlertChannelFactory> entry : prioritySPIFactory.getSPIMap().entrySet()) {
             String name = entry.getKey();
             AlertChannelFactory factory = entry.getValue();
 
             logger.info("Registering alert plugin: {} - {}", name, factory.getClass());
-
+            //todo 报警对象
             final AlertChannel alertChannel = factory.create();
 
             logger.info("Registered alert plugin: {} - {}", name, factory.getClass());
@@ -90,7 +90,7 @@ public final class AlertPluginManager {
 
             final PluginDefine pluginDefine = new PluginDefine(name, PluginType.ALERT.getDesc(), paramsJson);
             final int id = pluginDao.addOrUpdatePluginDefine(pluginDefine);
-
+            //todo 放入map，方便外面使用
             channelKeyedById.put(id, alertChannel);
         }
     }
