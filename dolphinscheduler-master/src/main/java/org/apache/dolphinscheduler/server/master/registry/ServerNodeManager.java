@@ -142,9 +142,11 @@ public class ServerNodeManager implements InitializingBean {
                 TimeUnit.SECONDS);
 
         // init MasterNodeListener listener
+        //todo 注册监听
         registryClient.subscribe(REGISTRY_DOLPHINSCHEDULER_MASTERS, new MasterDataListener());
 
         // init WorkerNodeListener listener
+        //todo 注册监听
         registryClient.subscribe(REGISTRY_DOLPHINSCHEDULER_WORKERS, new WorkerDataListener());
     }
 
@@ -197,6 +199,7 @@ public class ServerNodeManager implements InitializingBean {
                         logger.info("Worker: {} added, currentNode : {}", path, workerAddress);
                     } else if (type == Type.REMOVE) {
                         logger.info("Worker node : {} down.", path);
+                        //todo 发送worker down报警
                         alertDao.sendServerStoppedAlert(1, path, "WORKER");
                     } else if (type == Type.UPDATE) {
                         syncSingleWorkerNodeInfo(workerAddress, JSONUtils.parseObject(data, WorkerHeartBeat.class));
@@ -224,6 +227,7 @@ public class ServerNodeManager implements InitializingBean {
                     if (type.equals(Type.REMOVE)) {
                         logger.info("master node : {} down.", path);
                         updateMasterNodes();
+                        //todo 发送master down报警
                         alertDao.sendServerStoppedAlert(1, path, "MASTER");
                     }
                 } catch (Exception ex) {

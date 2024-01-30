@@ -18,6 +18,6 @@
 package org.apache.dolphinscheduler.common.enums;
 
 public enum AlertEvent {
-
+    //todo 服务down和超时
     SERVER_DOWN,TIME_OUT
 }
