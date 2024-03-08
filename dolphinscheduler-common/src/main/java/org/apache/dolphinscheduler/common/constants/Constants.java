@@ -635,10 +635,12 @@ public final class Constants {
      * default worker group
      */
     public static final String DEFAULT_WORKER_GROUP = "default";
+    //todo 可写
     /**
      * authorize writable perm
      */
     public static final int AUTHORIZE_WRITABLE_PERM = 7;
+    //todo 可读
     /**
      * authorize readable perm
      */

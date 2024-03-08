@@ -154,6 +154,7 @@ public class ResourcesController extends BaseController {
                                          @RequestParam(value = "pid") int pid,
                                          @RequestParam(value = "currentDir") String currentDir) {
         // todo verify the file name
+        // todo 创建资源
         return resourceService.createResource(loginUser, alias, description, type, file, pid, currentDir);
     }
 
@@ -663,6 +664,7 @@ public class ResourcesController extends BaseController {
     @AccessLogAnnotation
     public Result authorizedFile(@ApiIgnore @RequestAttribute(value = Constants.SESSION_USER) User loginUser,
                                  @RequestParam("userId") Integer userId) {
+        //todo 获取资源列表
         Map<String, Object> result = resourceService.authorizedFile(loginUser, userId);
         return returnDataList(result);
     }

@@ -224,6 +224,7 @@ public class ResourcesServiceImpl extends BaseServiceImpl implements ResourcesSe
      * @param currentDir current directory
      * @return create result code
      */
+    //todo 新建资源
     @Override
     @Transactional
     public Result<Object> createResource(User loginUser,
@@ -246,7 +247,7 @@ public class ResourcesServiceImpl extends BaseServiceImpl implements ResourcesSe
         if (!result.getCode().equals(Status.SUCCESS.getCode())) {
             return result;
         }
-
+        //todo 校验操作权限【在ds中目录也是资源】
         result = verifyPid(loginUser, pid);
         if (!result.getCode().equals(Status.SUCCESS.getCode())) {
             return result;
@@ -1303,11 +1304,13 @@ public class ResourcesServiceImpl extends BaseServiceImpl implements ResourcesSe
         Result<Object> result = new Result<>();
         putMsg(result, Status.SUCCESS);
         if (pid != -1) {
+            //todo 根据资源id
             Resource parentResource = resourcesMapper.selectById(pid);
             if (parentResource == null) {
                 putMsg(result, Status.PARENT_RESOURCE_NOT_EXIST);
                 return result;
             }
+            //todo 只有当前用户和资源所属的用户相同，才能允许操作
             if (!canOperator(loginUser, parentResource.getUserId())) {
                 putMsg(result, Status.USER_NO_OPERATION_PERM);
                 return result;
