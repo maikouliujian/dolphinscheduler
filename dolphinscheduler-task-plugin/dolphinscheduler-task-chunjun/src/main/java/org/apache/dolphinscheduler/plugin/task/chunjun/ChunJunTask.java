@@ -113,6 +113,7 @@ public class ChunJunTask extends AbstractTask {
 
             String jsonFilePath = buildChunJunJsonFile(paramsMap);
             String shellCommandFilePath = buildShellCommandFile(jsonFilePath, paramsMap);
+            //todo 执行chunjun任务的shell脚本
             TaskResponse commandExecuteResult = shellCommandExecutor.run(shellCommandFilePath);
 
             setExitStatusCode(commandExecuteResult.getExitStatusCode());
@@ -141,6 +142,7 @@ public class ChunJunTask extends AbstractTask {
      */
     private String buildChunJunJsonFile(Map<String, Property> paramsMap)
         throws Exception {
+        //todo 生成chunjun的json
         // generate json
         String fileName = String.format("%s/%s_job.json",
             taskExecutionContext.getExecutePath(),
@@ -154,6 +156,7 @@ public class ChunJunTask extends AbstractTask {
         }
 
         if (chunJunParameters.getCustomConfig() == Flag.YES.ordinal()) {
+            //todo chunjun的json模版
             json = chunJunParameters.getJson().replaceAll("\\r\\n", "\n");
         }
 
@@ -161,7 +164,7 @@ public class ChunJunTask extends AbstractTask {
         json = ParameterUtils.convertParameterPlaceholders(json, ParamUtils.convert(paramsMap));
 
         logger.debug("chunjun job json : {}", json);
-
+        //todo 将chunjun的json文件写入本地文件中！！！！！！camel是写入db，ds是写入本地磁盘
         // create chunjun json file
         FileUtils.writeStringToFile(new File(fileName), json, StandardCharsets.UTF_8);
         return fileName;
@@ -193,8 +196,10 @@ public class ChunJunTask extends AbstractTask {
         args.add(CHUNJUN_PATH);
         args.add("-mode");
         args.add(getExecMode(chunJunParameters));
+        //todo 支持sql呢？？？？？？
         args.add("-jobType sync");
         args.add("-job");
+        //todo chunjun json文件路径
         args.add(jobConfigFilePath);
         args.add("-chunjunDistDir");
         args.add(CHUNJUN_DIST_DIR);

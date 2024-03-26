@@ -48,6 +48,7 @@ public class ChunJunParameters extends AbstractParameters {
     /**
      * custom config json
      */
+    //todo chunjun的json文件！！！！！！
     private String json;
 
     /**
