@@ -113,7 +113,7 @@ public class CommonTaskProcessor extends BaseTaskProcessor {
                     processInstance.getId(), taskInstance.getProcessInstancePriority().getCode(),
                     taskInstance.getId(), taskInstance.getTaskGroupPriority(),
                     Constants.DEFAULT_WORKER_GROUP);
-
+            //todo 获取TaskExecutionContext
             TaskExecutionContext taskExecutionContext = getTaskExecutionContext(taskInstance);
             if (taskExecutionContext == null) {
                 logger.error("Get taskExecutionContext fail, task: {}", taskInstance);

@@ -50,6 +50,7 @@ public enum CommandType {
     /**
      * dispatch task request
      */
+    //todo 分发task
     TASK_DISPATCH_REQUEST,
 
     /**

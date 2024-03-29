@@ -22,9 +22,9 @@ package org.apache.dolphinscheduler.plugin.task.api.parameters;
  *
  */
 public class ParametersNode {
-
+    //todo 任务类型
     private String taskType;
-
+    //todo 任务参数
     private String taskParams;
 
     private String dependence;

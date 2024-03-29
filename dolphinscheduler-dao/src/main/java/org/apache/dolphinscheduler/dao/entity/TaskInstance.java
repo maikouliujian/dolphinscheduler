@@ -274,6 +274,7 @@ public class TaskInstance implements Serializable {
     /**
      * task params
      */
+    //todo task参数
     private String taskParams;
 
     /**

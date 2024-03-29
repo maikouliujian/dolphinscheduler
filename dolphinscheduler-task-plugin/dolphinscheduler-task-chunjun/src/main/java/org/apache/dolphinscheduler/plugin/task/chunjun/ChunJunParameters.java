@@ -35,6 +35,16 @@ import lombok.ToString;
 /**
  * chunjun parameters
  */
+
+/***
+ * {
+ * 		"localParams": [],
+ * 		"resourceList": [],
+ * 		"customConfig": 1,
+ * 		"json": "{\n    \"job\":{\n        \"content\":[\n            {\n                \"reader\":{\n                    \"name\":\"mysqlreader\",\n                    \"parameter\":{\n                        \"column\":[\n                            {\n                                \"name\":\"key\",\n                                \"type\":\"varchar\"\n                            },\n                            {\n                                \"name\":\"value\",\n                                \"type\":\"varchar\"\n                            },\n                            {\n                                \"name\":\"p_day\",\n                                \"type\":\"varchar\",\n                                \"value\":\"2023-12-27\"\n                            }\n                        ],\n                        \"username\":\"camel_rw\",\n                        \"password\":\"ZLbB6jxcfXorPkvm\",\n                        \"connection\":[\n                            {\n                                \"jdbcUrl\":[\n                                    \"jdbc:mysql://mysql.dev-spatio-inc.com:3306/spatio_flinkx?useSSL=false\"\n                                ],\n                                \"table\":[\n                                    \"test\"\n                                ]\n                            }\n                        ]\n                    }\n                },\n                \"writer\":{\n                    \"name\":\"clickhousewriter\",\n                    \"parameter\":{\n                        \"column\":[\n                            \"key\",\n                            \"value\",\n                            \"p_day\"\n                        ],\n                        \"writeMode\":\"insert\",\n                        \"encoding\":\"utf-8\",\n                        \"connection\":[\n                            {\n                                \"jdbcUrl\":\"jdbc:clickhouse://chproxy.inf.spatio-inc.com:9091/default?socket_timeout=60000\",\n                                \"table\":[\n                                    \"ganying789_local\"\n                                ]\n                            }\n                        ],\n                        \"password\":\"\",\n                        \"username\":\"clickhouse\",\n                        \"batchSize\":1000\n                    }\n                }\n            }\n        ],\n        \"setting\":{\n            \"errorLimit\":{\n                \"percentage\":100,\n                \"record\":1\n            },\n            \"speed\":{\n                \"channel\":1,\n                \"bytes\":0\n            }\n        }\n    }\n}",
+ * 		"deployMode": "yarn-per-job"
+ *        }
+ */
 @Setter
 @Getter
 @ToString

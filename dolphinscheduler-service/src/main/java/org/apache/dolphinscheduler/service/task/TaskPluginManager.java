@@ -91,6 +91,7 @@ public class TaskPluginManager {
         if (Objects.isNull(taskChannel)) {
             return null;
         }
+        //todo 解析任务参数
         return taskChannel.parseParameters(parametersNode);
     }
 

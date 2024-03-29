@@ -210,6 +210,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
     /**
      * The StandBy task list, will be executed, need to know, the taskInstance in this queue may doesn't have id.
      */
+    //todo 待提交的task队列
     private final PeerTaskInstancePriorityQueue readyToSubmitTaskQueue = new PeerTaskInstancePriorityQueue();
 
     /**
@@ -696,7 +697,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
         try {
             LoggerUtils.setWorkflowInstanceIdMDC(processInstance.getId());
             if (workflowRunnableStatus == WorkflowRunnableStatus.CREATED) {
-                //todo 构建dag
+                //todo 构建dag，会从数据库中取task信息
                 buildFlowDag();
                 workflowRunnableStatus = WorkflowRunnableStatus.INITIALIZE_DAG;
                 logger.info("workflowStatue changed to :{}", workflowRunnableStatus);
@@ -791,6 +792,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
 
         List<ProcessTaskRelation> processTaskRelations =
                 processService.findRelationByCode(processDefinition.getCode(), processDefinition.getVersion());
+        //todo 从这里取出TaskDefinitionLog，里面包含任务参数，从表中t_ds_task_definition_log取
         List<TaskDefinitionLog> taskDefinitionLogs =
                 processService.getTaskDefineLogListByRelation(processTaskRelations);
         List<TaskNode> taskNodeList = processService.transformTask(processTaskRelations, taskDefinitionLogs);
@@ -951,13 +953,14 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
             processService.packageTaskInstance(taskInstance, processInstance);
 
             ITaskProcessor taskProcessor = TaskProcessorFactory.getTaskProcessor(taskInstance.getTaskType());
+            //todo 初始化！！！！！！
             taskProcessor.init(taskInstance, processInstance);
 
             if (taskInstance.getState().isRunning()
                     && taskProcessor.getType().equalsIgnoreCase(Constants.COMMON_TASK_TYPE)) {
                 notifyProcessHostUpdate(taskInstance);
             }
-            //todo 提交task
+            //todo 提交task【只将task信息入库】
             boolean submit = taskProcessor.action(TaskAction.SUBMIT);
             if (!submit) {
                 logger.error("Submit standby task failed!, taskCode: {}, taskName: {}",
@@ -1000,7 +1003,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
                     return Optional.of(taskInstance);
                 }
             }
-
+            //todo 分发task
             boolean dispatchSuccess = taskProcessor.action(TaskAction.DISPATCH);
             if (!dispatchSuccess) {
                 logger.error("Dispatch standby process {} task {} failed", processInstance.getName(), taskInstance.getName());
@@ -1181,6 +1184,7 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
         taskInstance.setRetryInterval(taskNode.getRetryInterval());
 
         // set task param
+        //todo task执行参数！！！！！！！
         taskInstance.setTaskParams(taskNode.getTaskParams());
 
         // set task group and priority
@@ -1333,12 +1337,14 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
                 DagHelper.parsePostNodes(parentNodeCode, skipTaskNodeMap, dag, getCompleteTaskInstanceMap());
         List<TaskInstance> taskInstances = new ArrayList<>();
         for (String taskNode : submitTaskNodeList) {
+            //todo TaskNode中有task信心
             TaskNode taskNodeObject = dag.getNode(taskNode);
             Optional<TaskInstance> existTaskInstanceOptional = getTaskInstance(taskNodeObject.getCode());
             if (existTaskInstanceOptional.isPresent()) {
                 taskInstances.add(existTaskInstanceOptional.get());
                 continue;
             }
+            //todo 新建task
             TaskInstance task = createTaskInstance(processInstance, taskNodeObject);
             taskInstances.add(task);
         }
@@ -1375,10 +1381,12 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
                 logger.info("Task is be stopped, the state is {}, taskInstanceId: {}", task.getState(), task.getId());
                 continue;
             }
-
+            //todo 将task加入队列
             addTaskToStandByList(task);
         }
+        //todo 提交task
         submitStandByTask();
+        //todo 更新状态
         updateProcessInstanceState();
     }
 
@@ -1856,11 +1864,12 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatue> {
                 Set<String> preTask = dag.getPreviousNodes(Long.toString(task.getTaskCode()));
                 getPreVarPool(task, preTask);
             }
+            //todo 检查依赖的任务是否运行成功
             DependResult dependResult = getDependResultForTask(task);
             if (DependResult.SUCCESS == dependResult) {
                 //todo！！！！！！！
                 logger.info("The dependResult of task {} is success, so ready to submit to execute", task.getName());
-                //todo 提交故障恢复的task
+                //todo 正常运行和故障恢复task都走这里
                 Optional<TaskInstance> taskInstanceOptional = submitTaskExec(task);
                 if (!taskInstanceOptional.isPresent()) {
                     this.taskFailedSubmit = true;

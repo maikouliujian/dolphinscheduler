@@ -107,6 +107,7 @@ public class TaskNode {
      */
     @JsonDeserialize(using = JSONUtils.JsonDataDeserializer.class)
     @JsonSerialize(using = JSONUtils.JsonDataSerializer.class)
+    //todo task参数
     private String params;
 
     /**

@@ -334,7 +334,7 @@ public abstract class BaseTaskProcessor implements ITaskProcessor {
         }
 
         Map<String, Property> businessParamsMap = curingParamsService.preBuildBusinessParams(processInstance);
-
+        //todo 获取运行参数
         AbstractParameters baseParam = taskPluginManager.getParameters(ParametersNode.builder()
                 .taskType(taskInstance.getTaskType()).taskParams(taskInstance.getTaskParams()).build());
         Map<String, Property> propertyMap =

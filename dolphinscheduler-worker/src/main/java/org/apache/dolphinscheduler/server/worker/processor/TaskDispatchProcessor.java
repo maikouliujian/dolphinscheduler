@@ -82,7 +82,7 @@ public class TaskDispatchProcessor implements NettyRequestProcessor {
 
     @Autowired(required = false)
     private StorageOperate storageOperate;
-
+    //todo 处理任务提交的逻辑
     @Counted(value = "ds.task.execution.count", description = "task execute total count")
     @Timed(value = "ds.task.execution.duration", percentiles = {0.5, 0.75, 0.95, 0.99}, histogram = true)
     @Override
@@ -123,7 +123,7 @@ public class TaskDispatchProcessor implements NettyRequestProcessor {
                 workerMessageSender.sendMessage(taskExecutionContext, workflowMasterAddress,
                         CommandType.TASK_EXECUTE_RESULT);
             }
-
+            //todo 创建WorkerDelayTaskExecuteRunnable
             WorkerDelayTaskExecuteRunnable workerTaskExecuteRunnable = WorkerTaskExecuteRunnableFactoryBuilder
                     .createWorkerDelayTaskExecuteRunnableFactory(
                             taskExecutionContext,
@@ -135,6 +135,7 @@ public class TaskDispatchProcessor implements NettyRequestProcessor {
                             storageOperate)
                     .createWorkerTaskExecuteRunnable();
             // submit task to manager
+            //todo
             boolean offer = workerManager.offer(workerTaskExecuteRunnable);
             if (!offer) {
                 logger.warn("submit task to wait queue error, queue is full, current queue size is {}, will send a task reject message to master", workerManager.getWaitSubmitQueueSize());

@@ -84,6 +84,7 @@ public class NettyRemotingServer {
     /**
      * server handler
      */
+    //todo server端处理核心handler
     private final NettyServerHandler serverHandler = new NettyServerHandler(this);
 
     /**

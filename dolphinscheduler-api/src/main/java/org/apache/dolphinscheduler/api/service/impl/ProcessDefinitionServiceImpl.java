@@ -277,6 +277,7 @@ public class ProcessDefinitionServiceImpl extends BaseServiceImpl implements Pro
         if (definition != null) {
             throw new ServiceException(Status.PROCESS_DEFINITION_NAME_EXIST, name);
         }
+        //todo 生成taskDefinitionLogs
         List<TaskDefinitionLog> taskDefinitionLogs = generateTaskDefinitionList(taskDefinitionJson);
         List<ProcessTaskRelationLog> taskRelationList = generateTaskRelationList(taskRelationJson, taskDefinitionLogs);
         int tenantId = -1;
@@ -301,6 +302,7 @@ public class ProcessDefinitionServiceImpl extends BaseServiceImpl implements Pro
                                                   ProcessDefinition processDefinition,
                                                   List<TaskDefinitionLog> taskDefinitionLogs, String otherParamsJson) {
         Map<String, Object> result = new HashMap<>();
+        //todo 保存task信息到db
         int saveTaskResult = processService.saveTaskDefine(loginUser, processDefinition.getProjectCode(),
                 taskDefinitionLogs, Boolean.TRUE);
         if (saveTaskResult == Constants.EXIT_CODE_SUCCESS) {

@@ -106,6 +106,7 @@ public class NettyExecutorManager extends AbstractExecutorManager<Boolean> {
         boolean success = false;
         while (!success) {
             try {
+                //todo 由master向worker节点发送netty请求
                 doExecute(host, command);
                 success = true;
                 context.setHost(host);

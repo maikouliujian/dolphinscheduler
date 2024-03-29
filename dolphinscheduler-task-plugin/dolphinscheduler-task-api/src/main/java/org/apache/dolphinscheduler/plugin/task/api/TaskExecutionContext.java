@@ -162,6 +162,7 @@ public class TaskExecutionContext implements Serializable {
     /**
      * taskParams
      */
+    //todo 任务启动参数
     private String taskParams;
 
     /**
@@ -207,6 +208,7 @@ public class TaskExecutionContext implements Serializable {
     /**
      * delay execution time.
      */
+    //todo 延迟执行
     private int delayTime;
 
     /**

@@ -94,6 +94,7 @@ public class ChunJunTask extends AbstractTask {
     @Override
     public void init() {
         logger.info("chunjun task params {}", taskExecutionContext.getTaskParams());
+        //todo 执行参数的转化
         chunJunParameters = JSONUtils.parseObject(taskExecutionContext.getTaskParams(), ChunJunParameters.class);
 
         if (!chunJunParameters.checkParameters()) {

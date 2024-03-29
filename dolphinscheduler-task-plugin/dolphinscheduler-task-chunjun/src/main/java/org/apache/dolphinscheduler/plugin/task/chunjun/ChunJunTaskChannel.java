@@ -42,6 +42,7 @@ public class ChunJunTaskChannel implements TaskChannel {
 
     @Override
     public AbstractParameters parseParameters(ParametersNode parametersNode) {
+        //todo 解析chunjun 任务的参数
         return JSONUtils.parseObject(parametersNode.getTaskParams(), ChunJunParameters.class);
     }
 

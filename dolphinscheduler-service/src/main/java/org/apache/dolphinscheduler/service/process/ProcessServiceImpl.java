@@ -1281,6 +1281,7 @@ public class ProcessServiceImpl implements ProcessService {
             try {
                 // submit task to db
                 // Only want to use transaction here
+                //todo 将task信息入库
                 task = submitTask(processInstance, taskInstance);
                 if (task != null && task.getId() != null) {
                     break;

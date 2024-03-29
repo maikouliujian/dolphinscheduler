@@ -107,6 +107,7 @@ public class WorkerManagerThread implements Runnable {
                 return false;
             }
         }
+        //todo 加入队列
         return waitSubmitQueue.offer(workerDelayTaskExecuteRunnable);
     }
 
@@ -127,6 +128,7 @@ public class WorkerManagerThread implements Runnable {
                     Thread.sleep(Constants.SLEEP_TIME_MILLIS);
                 }
                 if (this.getThreadPoolQueueSize() <= workerExecThreads) {
+                    //todo 从队列中取任务！！！！！！
                     final WorkerDelayTaskExecuteRunnable workerDelayTaskExecuteRunnable = waitSubmitQueue.take();
                     workerExecService.submit(workerDelayTaskExecuteRunnable);
                 } else {

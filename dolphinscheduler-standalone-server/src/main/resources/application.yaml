@@ -32,12 +32,19 @@ spring:
       - taskDefinition
     caffeine:
       spec: maximumSize=100,expireAfterWrite=300s,recordStats
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   sql:
     init:
       schema-locations: classpath:sql/dolphinscheduler_h2.sql
+      mode: never
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:dolphinscheduler;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=true
+    # url: jdbc:h2:mem:dolphinscheduler;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=true
+    # url: jdbc:h2:/Users/admin/IdeaProjects/mine/ds/dolphinscheduler/h2db/dolphin1;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=true
+    url: jdbc:h2:/Users/admin/IdeaProjects/dolphinscheduler/h2db/dolphin1;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=true
     username: sa
     password: ""
   quartz:

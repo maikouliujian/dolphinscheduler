@@ -143,7 +143,7 @@ public abstract class WorkerTaskExecuteRunnable implements Runnable {
             }
         }
     }
-
+    //todo task运行
     @Override
     public void run() {
         try {
@@ -166,7 +166,7 @@ public abstract class WorkerTaskExecuteRunnable implements Runnable {
                         "The current execute mode is dry run, will stop the subsequent process and set the taskInstance status to success");
                 return;
             }
-            //todo 执行task之前
+            //todo 执行task之前，对task进行初始化
             beforeExecute();
 
             TaskCallBack taskCallBack = TaskCallbackImpl.builder().workerMessageSender(workerMessageSender)
@@ -216,19 +216,20 @@ public abstract class WorkerTaskExecuteRunnable implements Runnable {
 
         TaskExecutionCheckerUtils.downloadResourcesIfNeeded(storageOperate, taskExecutionContext, logger);
         logger.info("Resources:{} check success", taskExecutionContext.getResources());
-
+        //todo 获取taskchannel
         TaskChannel taskChannel = taskPluginManager.getTaskChannelMap().get(taskExecutionContext.getTaskType());
         if (null == taskChannel) {
             throw new TaskPluginException(String.format("%s task plugin not found, please check config file.",
                     taskExecutionContext.getTaskType()));
         }
+        //todo 根据taskChannel创建task
         task = taskChannel.createTask(taskExecutionContext);
         if (task == null) {
             throw new TaskPluginException(String.format("%s task is null, please check the task plugin is correct",
                     taskExecutionContext.getTaskType()));
         }
         logger.info("Task plugin: {} create success", taskExecutionContext.getTaskType());
-
+        //todo task初始化
         task.init();
         logger.info("Success initialized task plugin instance success");
 

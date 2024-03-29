@@ -35,7 +35,8 @@ import lombok.NonNull;
 @SpringBootApplication
 public class StandaloneServer implements ApplicationListener<ApplicationEvent> {
 
-    private static final Logger logger = LoggerFactory.getLogger(StandaloneServer.class);
+    private static final Logger
+            logger = LoggerFactory.getLogger(StandaloneServer.class);
 
     private static TestingServer zookeeperServer;
 

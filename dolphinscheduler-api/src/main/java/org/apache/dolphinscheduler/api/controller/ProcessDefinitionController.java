@@ -114,9 +114,11 @@ public class ProcessDefinitionController extends BaseController {
      * @param tenantCode tenantCode
      * @param taskRelationJson relation json for nodes
      * @param taskDefinitionJson taskDefinitionJson
+     *       '[{"code":13090324099360,"delayTime":"0","description":"","environmentCode":-1,"failRetryInterval":"1","failRetryTimes":"0","flag":"YES","name":"chunjun_test11111","taskGroupId":null,"taskGroupPriority":null,"taskParams":{"localParams":[],"resourceList":[],"customConfig":1,"json":"{\\n \\"job\\":{\\n \\"content\\":[\\n {\\n \\"reader\\":{\\n \\"name\\":\\"mysqlreader\\",\\n \\"parameter\\":{\\n \\"column\\":[\\n…setting\\":{\\n \\"errorLimit\\":{\\n \\"percentage\\":100,\\n \\"record\\":1\\n },\\n \\"speed\\":{\\n \\"channel\\":1,\\n \\"bytes\\":0\\n }\\n }\\n }\\n}","deployMode":"yarn-per-job"},"taskPriority":"MEDIUM","taskType":"CHUNJUN","timeout":30,"timeoutFlag":"OPEN","timeoutNotifyStrategy":"WARN","workerGroup":"default","cpuQuota":-1,"memoryMax":-1,"taskExecuteType":"BATCH","version":1,"id":2}]'
      * @param otherParamsJson otherParamsJson handle other params
      * @return create result code
      */
+    //todo 创建工作流
     @ApiOperation(value = "createProcessDefinition", notes = "CREATE_PROCESS_DEFINITION_NOTES")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "PROCESS_DEFINITION_NAME", required = true, dataTypeClass = String.class),
@@ -137,6 +139,7 @@ public class ProcessDefinitionController extends BaseController {
                                           @RequestParam(value = "timeout", required = false, defaultValue = "0") int timeout,
                                           @RequestParam(value = "tenantCode", required = true) String tenantCode,
                                           @RequestParam(value = "taskRelationJson", required = true) String taskRelationJson,
+                                          //todo 任务请求参数
                                           @RequestParam(value = "taskDefinitionJson", required = true) String taskDefinitionJson,
                                           @RequestParam(value = "otherParamsJson", required = false) String otherParamsJson,
                                           @RequestParam(value = "executionType", defaultValue = "PARALLEL") ProcessExecutionTypeEnum executionType) {
